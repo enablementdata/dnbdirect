@@ -1,8 +1,7 @@
 import dnbdirect
-print "---- Loading from ---"
-print dnbdirect.__file__
 
-from dnbdirect import get_auth_token, get_dcp_premium, get_dcp_enhanced, get_commercial_credit_score, get_viability_rating, get_viability_score, get_pbpre_enhanced, get_sers, get_fss
+from dnbdirect import get_auth_token, get_dcp_premium, get_dcp_enhanced, get_commercial_credit_score, get_viability_rating, \
+    get_viability_score, get_pbpre_enhanced, get_sers, get_fss, get_entity_match
 
 import sys
 import unittest
@@ -68,6 +67,7 @@ class TestDnbDirect(unittest.TestCase):
         except Exception as e:
             self.fail("Couldn't load Viability Rating for duns #" + duns)
 
+    @unittest.skip("Skipping")
     def testGetViabilityScore(self):
         duns = '060704780'
         try:
@@ -105,6 +105,10 @@ class TestDnbDirect(unittest.TestCase):
         assert raw_score
         class_score = fss[1]
         assert class_score
+
+    def testMatch(self):
+        matches = get_entity_match("Dell", self.token)
+        assert matches
 
 if __name__ == "__main__":
     unittest.main()
