@@ -2,6 +2,7 @@ __author__ = 'reedn'
 
 import urllib2, urllib
 import json
+import sys
 
 def get_auth_token(username, password):
     auth_url = 'https://maxcvservices.dnb.com/rest/Authentication'
@@ -32,7 +33,10 @@ def request_product(auth_token, duns, product_code, version='3.1'):
         print "Retrieving " + url
         content = retrieve_content_from_url(auth_token, url)
         return content
+    except urllib2.HTTPError, e:
+        print e
     except:
+        print sys.exc_info()[0]
         return "{}"
 
 def get_dcp_premium(duns, auth_token):
@@ -46,6 +50,18 @@ def get_dcp_enhanced(duns, auth_token):
 def get_commercial_credit_score(duns, auth_token):
     dcp = get_dcp_premium(duns, auth_token)
     return extract_commercial_credit_score_from_dcp(dcp)
+
+def get_triple_play(duns, auth_token):
+    return request_product(auth_token, duns, 'TP_STD', version="5.0")
+
+def get_triple_play_composite_score(duns, auth_token):
+    try:
+        tps = get_triple_play(duns, auth_token)
+        json_tps = json.loads(tps)
+        return json_tps['OrderProductResponse']['OrderProductResponseDetail']['Product']['Organization']['Assessment']['TriplePlayScore']['CompositeRiskScore']
+    except:
+        print sys.exc_info()[0]
+        return None
 
 def extract_commercial_credit_score_from_dcp(dcp):
     json_dcp = json.loads(dcp)
