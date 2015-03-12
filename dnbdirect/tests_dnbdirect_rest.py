@@ -1,6 +1,6 @@
 import dnbdirect
 
-from dnbdirect import get_auth_token, get_dcp_premium, get_dcp_enhanced, get_commercial_credit_score, get_viability_rating, \
+from dnbdirect.rest import get_auth_token, get_dcp_premium, get_dcp_enhanced, get_commercial_credit_score, get_viability_rating, \
     get_viability_score, get_pbpre_enhanced, get_sers, get_fss, get_entity_match, get_triple_play, get_triple_play_composite_score
 
 import sys

@@ -7,5 +7,5 @@ setup(name='dnbdirect',
       author='Nate',
       author_email='reedn@dnb.com',
       license='Copyright',
-      packages=['dnbdirect'],
+      packages=['dnbdirect.rest', 'dnbdirect.soap', 'dnbdirect.restasync'],
       zip_safe=False)
